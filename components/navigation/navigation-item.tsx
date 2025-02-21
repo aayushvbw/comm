@@ -6,6 +6,8 @@ import { useParams, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { ActionTooltip } from "@/components/action-tooltip";
 
+import React from "react";
+
 interface NavigationItemProps {
     id: string;
     imageUrl: string;
@@ -21,7 +23,7 @@ export const NavigationItem = ({
     const router = useRouter();
 
     const onClick = () => {
-        router.push(`/servers/{id}`);
+        router.push(`/servers/${id}`);
     }
 
     return (
@@ -30,9 +32,9 @@ export const NavigationItem = ({
             align="center"
             label={name}
         >
-            <button onClick={() => {onClick}} className="group relative flex items-center">
+            <button onClick={onClick} className="group relative flex items-center">
                 <div className={cn(
-                    "absolute left-0 bg-primary rounded-r-full transition-all w-[px]",
+                    "absolute left-0 bg-primary rounded-r-full transition-all w-[4px]",
                     params?.serverId !== id && "group-hover:h-[20px]",
                     params?.serverId === id ?  "h-[36px]" : "h-[8px]"
                 )}/>

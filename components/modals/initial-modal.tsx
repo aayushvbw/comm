@@ -43,7 +43,7 @@ export const InitialModal = () => {
 
     useEffect(() => {
         setIsMounted(true);
-    })
+    },[])
 
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -79,7 +79,7 @@ export const InitialModal = () => {
                         Customize your server
                     </DialogTitle>
                     <DialogDescription className="text-center text-zinc-500">
-                        CSE madarchod behenka loda hai apna sab sahi hai sab badal denge BC
+                    Give your server a personality with a name and an image. You can always change it later.
                     </DialogDescription>
                 </DialogHeader>
 
@@ -127,7 +127,7 @@ export const InitialModal = () => {
                             />
                         </div>
                         <DialogFooter className="bg-gray-100 px-6 py-4">
-                            <Button variant={"primary"} disabled={isLoading}>
+                            <Button disabled={isLoading} variant={"primary"}>
                                 Create
                             </Button>
                         </DialogFooter>
