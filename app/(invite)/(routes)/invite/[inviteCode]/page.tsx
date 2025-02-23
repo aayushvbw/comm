@@ -19,7 +19,7 @@ const InviteCodePage = async ({
     }
 
     const awaitedParam = await params;
-    const inviteCode = params.inviteCode;
+    const inviteCode = awaitedParam.inviteCode;
 
     if(!inviteCode){
         return redirect("/");
