@@ -1,13 +1,20 @@
 import { ChannelType, MemberRole } from "@prisma/client";
+
 import { redirect } from "next/navigation";
 
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 
 import { ServerHeader } from "@/components/server/server-header";
+import { ServerSearch } from "@/components/server/server-search";
+import { ServerSection } from "@/components/server/server-section"
+import { ServerChannel } from "@/components/server/server-channel";
+
 import { Hash, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";
-import { ScrollArea } from "../ui/scroll-area";
-import { ServerSearch } from "./server-search";
+
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import { ServerMember } from "./server-member";
 
 interface ServerSidebarProps {
     serverId: string;
@@ -120,6 +127,91 @@ export const ServerSidebar = async({
                         ]}
                     />
                 </div>
+                <Separator className="bg-zinc-200 dark:bg-zinc-700 rounded-md my-2"/>
+
+                {!!textChannels?.length && (
+                    <div className="mb-2">
+                        <ServerSection
+                            sectionType="channels"
+                            channelType={ChannelType.TEXT}
+                            role={role}
+                            label="Text Chat"
+                        />
+                        <div className="space-y-[2px]">
+                            {textChannels.map((channel) => (
+                                <ServerChannel
+                                key={channel.id}
+                                channel={channel}
+                                role={role}
+                                server={server}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {!!audiChannels?.length && (
+                    <div className="mb-2">
+                        <ServerSection
+                            sectionType="channels"
+                            channelType={ChannelType.AUDIO}
+                            role={role}
+                            label="Voice Chat"
+                        />
+                        <div className="space-y-[2px]">
+                            {audiChannels.map((channel) => (
+                                <ServerChannel
+                                key={channel.id}
+                                channel={channel}
+                                role={role}
+                                server={server}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                )}  
+
+                {!!videoChannels?.length && (
+                    <div className="mb-2">
+                        <ServerSection
+                            sectionType="channels"
+                            channelType={ChannelType.VIDEO}
+                            role={role}
+                            label="Video Chat"
+                        />
+                        <div className="space-y-[2px]">
+                            {videoChannels.map((channel) => (
+                                <ServerChannel
+                                key={channel.id}
+                                channel={channel}
+                                role={role}
+                                server={server}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                )}    
+
+                {!!members?.length && (
+                    <div className="mb-2">
+                        <ServerSection
+                            sectionType="members"
+                            role={role}
+                            label="Members"
+                            server={server}
+                        />
+                        <div className="space-y-[2px]">
+                            {members.map((member) => (
+                                <ServerMember
+                                    key={member.id}
+                                    member={member}
+                                    server={server}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                )}    
+
             </ScrollArea>
         </div>
     )
