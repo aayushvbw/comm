@@ -32,7 +32,7 @@ export const FileUpload = ({onChange,value,endpoint}: FileUploadProps) => {
             </div>
         )
     }
-
+ 
     return (
         <UploadDropzone
             endpoint={endpoint}
