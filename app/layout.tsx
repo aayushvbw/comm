@@ -4,6 +4,8 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ModalProvider } from "@/components/providers/modal-provider";
+import { SocketProvider } from "@/components/providers/socket-provider";
+
 import { cn } from "@/lib/utils";
 
 const geistSans = Geist({
@@ -31,8 +33,10 @@ export default function RootLayout({
       <html lang="en" suppressHydrationWarning>
         <body className={cn(`${geistSans.variable} ${geistMono.variable} antialiased`,"bg-[#f0efd8] dark:bg-[#313338]")}>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} storageKey="dark-mode">
-            <ModalProvider/>
-            {children}
+            <SocketProvider>
+              <ModalProvider/>
+              {children}
+            </SocketProvider>
           </ThemeProvider>
         </body>
       </html>
