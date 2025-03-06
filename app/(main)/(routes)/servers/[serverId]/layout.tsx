@@ -15,7 +15,7 @@ const ServerIdLayout = async ({
     const profile = await currentProfile();
 
     if(!profile){
-        return <RedirectToSignIn/>
+        return RedirectToSignIn
     }
 
     const resolvedParams = await params;
