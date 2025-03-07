@@ -1,9 +1,16 @@
 "use client";
 
-import { Member } from "@prisma/client";
+import { Member, Message, Profile } from "@prisma/client";
 import { ChatWelcome } from "./chat-welcome";
 import { useChatQuery } from "@/hooks/use-chat-query";
 import { Loader2, ServerCrash } from "lucide-react";
+import { Fragment } from "react";
+
+type MessageWithMemberWithProfile = Message & {
+  member: Member & {
+    profile: Profile
+  }
+}
 
 interface ChatMessagesProps {
     name: string;
@@ -43,7 +50,7 @@ export const ChatMessages = ({
         paramValue
     });
 
-    if ((status as string) === "loading"){ // need attention
+    if (status === "pending"){ // loading is now changed to pending
         return (
           <div className="flex flex-col flex-1 justify-center items-center">
             <Loader2 className="h-7 w-7 text-zinc-500 animate-spin my-4" />
@@ -54,7 +61,7 @@ export const ChatMessages = ({
         );
     }
 
-    if ((status as string) === "error"){
+    if (status === "error"){
         return (
           <div className="flex flex-col flex-1 justify-center items-center">
             <ServerCrash className="h-7 w-7 text-zinc-500 my-4" />
@@ -71,6 +78,17 @@ export const ChatMessages = ({
                 type={type}
                 name={name}
             />
+            <div className="flex flex-col-reverse mt-auto">
+              {data?.pages?.map((group, i) => (
+                <Fragment key={i}>
+                  {group.items.map((message: MessageWithMemberWithProfile) => (
+                    <div key={message.id}>
+                      {message.content}
+                    </div>
+                  ))}
+                </Fragment>
+              ))}
+            </div>
         </div>
     )
 }
