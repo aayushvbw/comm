@@ -92,6 +92,9 @@ export const ChatItem = ({
             });
 
             await axios.patch(url, values);
+
+            form.reset();
+            setIsEditing(false);
         }catch(error){
             console.log(error); 
         }
@@ -112,10 +115,6 @@ export const ChatItem = ({
     const canEditMessage = !deleted && isOwner && !fileUrl;
     const isPDF = fileType === "pdf" && fileUrl;                        
     const isImage = !isPDF && fileUrl;
-
-    console.log("fileUrl:", fileUrl);
-    console.log("fileType:", fileType);
-    console.log("isPDF:", isPDF);
 
     return (
         <div className="relative group flex items-center hover:bg-black/5 p-4 transition w-full">
