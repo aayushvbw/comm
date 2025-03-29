@@ -63,7 +63,7 @@ export async function GET(
                 }
             });
         }
-
+ 
         let nextCursor = null;
 
         if(messages.length === MESSAGES_BATCH){
